@@ -47,10 +47,10 @@ pipeline {
                                 usernamePassword(credentialsId: 'docker_hub_login', usernameVariable: 'DOCKERUSERNAME', passwordVariable: 'DOCKERPASS')]) {
                     script {
                         try {
-                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker login -u $DOCKERUSERNAME -p $DOCKERPASS\""
-                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker pull hchetoui/train-schedule:latest\""
-                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker stop train-schedule\""
-                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"docker rm train-schedule\""
+                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \" echo '$USERPASS' | sudo -S docker login -u $DOCKERUSERNAME -p $DOCKERPASS\""
+                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"echo '$USERPASS' | sudo -S docker pull hchetoui/train-schedule:latest\""
+                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"echo '$USERPASS' | sudo -S docker stop train-schedule\""
+                            sh "sshpass -p '$USERPASS' -v ssh -o StrictHostKeyChecking=no $USERNAME@$prod_ip \"echo '$USERPASS' | sudo -S docker rm train-schedule\""
                         } catch (err) {
                             echo: 'caught error: $err'
                         }
