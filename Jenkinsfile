@@ -1,7 +1,6 @@
 pipeline {
     agent any
     stages {
-    /*
         stage('Build') {
             steps {
                 echo 'Running build automation'
@@ -35,14 +34,13 @@ pipeline {
                 }
             }
         }
-    */
         stage('DeployToProduction') {
             when {
                 branch 'master'
             }
             steps {
-                /*input 'Deploy to Production?'
-                milestone(1)*/
+                input 'Deploy to Production?'
+                milestone(1)
                 withCredentials([usernamePassword(credentialsId: 'webserver_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS'),
                                 usernamePassword(credentialsId: 'docker_hub_login', usernameVariable: 'DOCKERUSERNAME', passwordVariable: 'DOCKERPASS')]) {
                     script {
